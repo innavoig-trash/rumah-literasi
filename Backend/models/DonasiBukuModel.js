@@ -3,54 +3,42 @@ import db from "../config/Database.js";
 
 const { DataTypes } = Sequelize;
 
-const Donasi = db.define('donasi', {
+const Donasi_Buku = db.define('donasi_buku', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false
     },
-    nama_user: {
-        type: DataTypes.STRING(255),
-        allowNull: false,
-        validate: {
-            notEmpty: true
-        }
-    },
-    jenis_donasi: {
-        type: DataTypes.STRING(255),
-        allowNull: false,
-        validate: {
-            notEmpty: true
-        }
-    },
     judul_buku: {
         type: DataTypes.STRING(255),
+        allowNull: false,
+        validate: {
+            notEmpty: true
+        }
+    },
+    kategori_buku: {
+        type: DataTypes.STRING(255),
+        allowNull: false,
+        validate: {
+            notEmpty: true
+        }
+    },
+    jumlah_buku: {
+        type: DataTypes.STRING(3),
         allowNull: true, // Karena dapat bernilai NULL
         defaultValue: null
     },
-    jumlah: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        validate: {
-            notEmpty: true
-        }
-    },
-    status: {
-        type: DataTypes.STRING(50),
-        allowNull: false,
-        validate: {
-            notEmpty: true
-        }
-    },
-    gambar: {
+    alamat_pengiriman: {
         type: DataTypes.STRING(255),
-        allowNull: false, 
-        defaultValue: null
-    }
+        allowNull: false,
+        validate: {
+            notEmpty: true
+        }
+    },
 }, {
     freezeTableName: true, // Nama tabel tidak diubah menjadi bentuk jamak
     timestamps: false // Nonaktifkan timestamps (createdAt dan updatedAt)
 });
 
-export default Donasi;
+export default Donasi_Buku;

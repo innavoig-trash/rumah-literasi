@@ -44,14 +44,22 @@ const PinjamanList = () => {
               <td>
                 <figure className="image is-64x64">
                   <img
-                    src={`http://localhost:5000/images/pinjaman/${item.gambar}`}
-                    alt={item.nama_peminjam}
+                    src={item.status === 'returned'
+                      ? `http://localhost:5000/images/pinjaman/${item.gambar}` // Gambar pengembalian jika statusnya "returned"
+                      : `http://localhost:5000/images/buku/${item.gambar}`}  // Gambar buku yang dipinjam
+                    alt={item.judul_buku}
                   />
                 </figure>
+
               </td>
               <td>{item.nama_peminjam}</td>
               <td>{item.judul_buku ? item.judul_buku : "-"}</td>
-              <td>{item.tanggal_pengembalian ? item.tanggal_pengembalian : "-"}</td>
+              <td>
+                {item.tanggal_pengembalian
+                  ? new Date(item.tanggal_pengembalian).toLocaleDateString('en-GB')
+                  : "-"
+                }
+              </td>
               <td>{item.status}</td>
               <td>
                 <Link

@@ -101,40 +101,40 @@ export const getPinjamanById = async (req, res) => {
 export const returnPinjaman = async (req, res) => {
     const { id } = req.params;
     let fileName = null;
-  
+
     if (req.files && req.files.file) {
-      const file = req.files.file;
-      const fileSize = file.data.length;
-      const ext = path.extname(file.name);
-      fileName = file.md5 + ext;
-      const filePath = `./public/images/pinjaman/${fileName}`;
-      const allowedType = [".png", ".jpg", ".jpeg"];
-  
-      if (!allowedType.includes(ext.toLowerCase())) {
-        return res.status(422).json({ msg: "Invalid Images" });
-      }
-      if (fileSize > 5000000) {
-        return res.status(422).json({ msg: "Image must be less than 5 MB" });
-      }
-  
-      try {
-        file.mv(filePath);
-      } catch (err) {
-        return res.status(500).json({ msg: "Failed to upload file" });
-      }
+        const file = req.files.file;
+        const fileSize = file.data.length;
+        const ext = path.extname(file.name);
+        fileName = file.md5 + ext;
+        const filePath = `./public/images/pinjaman/${fileName}`;
+        const allowedType = [".png", ".jpg", ".jpeg"];
+
+        if (!allowedType.includes(ext.toLowerCase())) {
+            return res.status(422).json({ msg: "Invalid Images" });
+        }
+        if (fileSize > 5000000) {
+            return res.status(422).json({ msg: "Image must be less than 5 MB" });
+        }
+
+        try {
+            file.mv(filePath);
+        } catch (err) {
+            return res.status(500).json({ msg: "Failed to upload file" });
+        }
     }
-  
+
     try {
-      await Pinjaman.update(
-        { status: "Returned", gambar: fileName },
-        { where: { id } }
-      );
-      res.status(200).json({ msg: "Buku berhasil dikembalikan" });
+        await Pinjaman.update(
+            { status: "Returned", gambar: fileName },
+            { where: { id } }
+        );
+        res.status(200).json({ msg: "Buku berhasil dikembalikan" });
     } catch (error) {
-      res.status(500).json({ msg: "Gagal mengembalikan buku" });
+        res.status(500).json({ msg: "Gagal mengembalikan buku" });
     }
-  };
-  
+};
+
 
 // Menyetujui pinjaman
 export const approvePinjaman = async (req, res) => {

@@ -9,8 +9,9 @@ import UserRoute from "./routes/UserRoute.js";
 import KegiatanRoute from "./routes/KegiatanRoute.js";
 import AuthRoute from "./routes/AuthRoute.js";
 import BukuRoute from "./routes/BukuRoute.js";
-import DonasiRoute from "./routes/DonasiRoute.js";
 import PinjamanRoute from "./routes/PinjamanRoute.js";
+import DonasiBukuRoute from "./routes/DonasiBukuRoute.js";
+import DonasiUangRoute from "./routes/DonasiUangRoute.js";
 
 dotenv.config();
 
@@ -71,8 +72,9 @@ app.use(UserRoute);
 app.use(KegiatanRoute);
 app.use(AuthRoute);
 app.use(BukuRoute);
-app.use(DonasiRoute);
 app.use(PinjamanRoute);
+app.use(DonasiBukuRoute);
+app.use(DonasiUangRoute);
 
 // Sinkronisasi store untuk sesi
 store.sync();

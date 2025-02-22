@@ -1,19 +1,12 @@
 import React from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import logo from "../logo.png";
-import { useDispatch, useSelector } from "react-redux";
-import { LogOut, reset } from "../features/authSlice";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  
   const { user } = useSelector((state) => state.auth);
 
-  const logout = () => {
-    dispatch(LogOut());
-    dispatch(reset());
-    navigate("/");
-  };
 
   return (
     <div>
@@ -45,9 +38,14 @@ const Navbar = () => {
           <div className="navbar-end">
             <div className="navbar-item">
               <div className="buttons">
-                <button onClick={logout} className="button is-light">
-                  Log out
-                </button>
+                {user && (
+                  <div className="navbar-item" style={{ display: "flex", alignItems: "center", cursor: "pointer", color: "#5092f5" }}>
+                    <span className="icon" style={{ marginRight: "8px" }}>
+                      <i className="fas fa-user"></i>
+                    </span>
+                    <span>{user.name}</span>
+                  </div>
+                )}
               </div>
             </div>
           </div>

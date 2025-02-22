@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import {
   IoPerson,
   IoCalendar,
@@ -17,6 +17,7 @@ const Sidebar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
+  const location = useLocation(); // Ambil pathname dari useLocation()
 
   const logout = () => {
     dispatch(LogOut());
@@ -25,138 +26,84 @@ const Sidebar = () => {
   };
 
   const renderMenu = () => {
-    if (!user) {
-      return null; // Jangan render apapun jika user belum ada
-    }
+    if (!user) return null;
 
-    switch (user.role) {
-      case "superadmin":
-        return (
-          <>
-            <li>
-              <NavLink to={"/dashboard"}>
-                <IoHome /> Dashboard
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to={"/kegiatan"}>
-                <IoCalendar /> Kegiatan
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to={"/buku"}>
-                <IoBook /> Buku
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to={"/donasi"}>
-                <IoGift /> Donasi
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to={"/buku"}>
-                <IoLibrary /> Ruang Baca
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to={"/pinjaman"}>
-                <IoClipboard /> Pinjaman
-              </NavLink>
-            </li>
-            <p className="menu-label">Super Admin</p>
-            <li>
-              <NavLink to={"/users"}>
-                <IoPerson /> Users
-              </NavLink>
-            </li>
-          </>
-        );
-      case "pustakawan":
-        return (
-          <>
-            <li>
-              <NavLink to={"/dashboard"}>
-                <IoHome /> Dashboard
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to={"/buku"}>
-                <IoBook /> Buku
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to={"/buku"}>
-                <IoLibrary /> Ruang Baca
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to={"/pinjaman"}>
-                <IoClipboard /> Pinjaman
-              </NavLink>
-            </li>
-          </>
-        );
-      case "admin":
-        return (
-          <>
-            <li>
-              <NavLink to={"/dashboard"}>
-                <IoHome /> Dashboard
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to={"/kegiatan"}>
-                <IoCalendar /> Kegiatan
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to={"/donasi"}>
-                <IoGift /> Donasi
-              </NavLink>
-            </li>
-          </>
-        );
-      case "user":
-        return (
-          <>
-            <li>
-              <NavLink to={"/dashboard"}>
-                <IoHome /> Dashboard
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to={"/donasi"}>
-                <IoGift /> Donasi
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to={"/buku"}>
-                <IoLibrary /> Ruang Baca
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to={"/pinjaman"}>
-                <IoClipboard /> Pinjaman
-              </NavLink>
-            </li>
-          </>
-        );
-      default:
-        return <p>Role tidak dikenali</p>;
-    }
+    const menuItems = {
+      superadmin: [
+        { path: "/dashboard", icon: <IoHome />, label: "Dashboard" },
+        { path: "/kegiatan", icon: <IoCalendar />, label: "Kegiatan" },
+        { path: "/buku", icon: <IoBook />, label: "Buku" },
+        { path: "/donasi", icon: <IoGift />, label: "Donasi" },
+        { path: "/ruangbaca", icon: <IoLibrary />, label: "Ruang Baca" },
+        { path: "/pinjaman", icon: <IoClipboard />, label: "Pinjaman" },
+        { path: "/users", icon: <IoPerson />, label: "Users" },
+      ],
+      pustakawan: [
+        { path: "/dashboard", icon: <IoHome />, label: "Dashboard" },
+        { path: "/buku", icon: <IoBook />, label: "Buku" },
+        { path: "/ruangbaca", icon: <IoLibrary />, label: "Ruang Baca" },
+        { path: "/pinjaman", icon: <IoClipboard />, label: "Pinjaman" },
+      ],
+      admin: [
+        { path: "/dashboard", icon: <IoHome />, label: "Dashboard" },
+        { path: "/kegiatan", icon: <IoCalendar />, label: "Kegiatan" },
+        { path: "/donasi", icon: <IoGift />, label: "Donasi" },
+      ],
+      user: [
+        { path: "/dashboard", icon: <IoHome />, label: "Dashboard" },
+        { path: "/donasi", icon: <IoGift />, label: "Donasi" },
+        { path: "/ruangbaca", icon: <IoLibrary />, label: "Ruang Baca" },
+        { path: "/pinjaman", icon: <IoClipboard />, label: "Pinjaman" },
+      ],
+    };
+
+    return menuItems[user.role]?.map((item, index) => (
+      <li key={index}>
+        <NavLink
+          to={item.path}
+          className="sidebar-link"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            padding: "10px",
+            borderRadius: "5px",
+            textDecoration: "none",
+            color: location.pathname.includes(item.path) ? "white" : "#333",
+            backgroundColor: location.pathname.includes(item.path)
+              ? "#5092f5"
+              : "transparent",
+            transition: "0.3s",
+          }}
+        >
+          {item.icon} <span style={{ marginLeft: "8px" }}>{item.label}</span>
+        </NavLink>
+      </li>
+    ));
   };
 
   return (
     <div>
-      <aside className="menu pl-2 has-shadow">
-        <p className="menu-label">General</p>
-        <ul className="menu-list">{renderMenu()}</ul>
+      <aside style={{ padding: "10px" }}>
+        <p style={{ fontWeight: "bold", marginBottom: "10px" }}>General</p>
+        <ul style={{ listStyle: "none", padding: 0 }}>{renderMenu()}</ul>
 
-        <p className="menu-label">Settings</p>
-        <ul className="menu-list">
+        <p style={{ fontWeight: "bold", marginTop: "20px", marginBottom: "10px" }}>Settings</p>
+        <ul style={{ listStyle: "none", padding: 0 }}>
           <li>
-            <button onClick={logout} className="button is-white">
-              <IoLogOut /> Logout
+            <button
+              onClick={logout}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                background: "none",
+                border: "none",
+                color: "#d9534f",
+                cursor: "pointer",
+                padding: "10px",
+                fontSize: "16px",
+              }}
+            >
+              <IoLogOut /> <span style={{ marginLeft: "8px" }}>Logout</span>
             </button>
           </li>
         </ul>

@@ -14,11 +14,11 @@ const Users = db.define("users", {
 (async () => {
     const hashPassword = await argon2.hash("11111111");
     await Users.create({
-        name: "Admin User",
-        email: "admin@gmail.com",
+        name: "super Admin User",
+        email: "superadmin@gmail.com",
         password: hashPassword,
-        role: "admin",
+        role: "superadmin",
     });
-    console.log("Admin user created");
+    console.log("Super Admin user created");
     process.exit();
 })();

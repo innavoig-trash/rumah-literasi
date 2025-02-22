@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
 import Layout from "../Layout";
-import FormAddDonasi from "../../components/donasi/FormAddDonasi";
+import DonasiUangForm from "../../components/donasiUang/DonasiUangForm";
+
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getMe } from "../../features/authSlice";
 
-const AddDonasi = () => {
+const Donasi = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isError } = useSelector((state) => state.auth);
@@ -22,9 +23,9 @@ const AddDonasi = () => {
 
   return (
     <Layout>
-      <FormAddDonasi />
+      <DonasiUangForm />
     </Layout>
   );
 };
 
-export default AddDonasi;
+export default Donasi;

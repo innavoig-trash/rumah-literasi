@@ -24,7 +24,16 @@ const DetailPinjaman = () => {
         setTanggalPengembalian(data.tanggal_pengembalian || "-");
         setStatus(data.status);
         setGambar(data.gambar);
-        setBuktiPengembalian(data.bukti_pengembalian || ""); // Menambahkan data bukti pengembalian
+        setBuktiPengembalian(data.bukti_pengembalian || "");
+
+        if (data.tanggal_pengembalian) {
+          const date = new Date(data.tanggal_pengembalian);
+          const day = String(date.getDate()).padStart(2, "0");
+          const month = String(date.getMonth() + 1).padStart(2, "0"); // GetMonth is 0-indexed, so we add 1
+          const year = date.getFullYear();
+          setTanggalPengembalian(`${day}-${month}-${year}`);
+        }
+
       } catch (error) {
         setMsg(error.response?.data?.msg || "Gagal memuat data.");
       }
@@ -128,7 +137,7 @@ const DetailPinjaman = () => {
               {gambar && (
                 <figure className="image is-128x128">
                   <img
-                    src={`http://localhost:5000/images/pinjaman/${gambar}`}
+                    src={`http://localhost:5000/images/buku/${gambar}`}
                     alt="Gambar Buku"
                   />
                 </figure>

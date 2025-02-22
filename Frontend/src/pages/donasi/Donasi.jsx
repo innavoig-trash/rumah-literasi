@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import Layout from "../Layout";
-import DonasiList from "../../components/donasi/DonasiList";
+import DonasiDashboard from "../../components/donasiBuku/DonasiDashboard";
+import DonasiBukuForm from "../../components/donasiBuku/DonasiBukuForm";
+
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getMe } from "../../features/authSlice";
@@ -22,7 +24,7 @@ const Donasi = () => {
 
   return (
     <Layout>
-      <DonasiList />
+      <DonasiDashboard />
     </Layout>
   );
 };

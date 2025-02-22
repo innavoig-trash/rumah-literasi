@@ -1,5 +1,6 @@
 import { Sequelize } from "sequelize";
 import db from "../config/Database.js";
+import Pinjaman from "./PinjamanModel.js";
 
 const { DataTypes } = Sequelize;
 
@@ -63,5 +64,8 @@ const Buku = db.define('buku', {
     freezeTableName: true,
     timestamps: false // Nonaktifkan timestamps
 });
+
+
+
 
 export default Buku;

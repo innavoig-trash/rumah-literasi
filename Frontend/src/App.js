@@ -10,9 +10,11 @@ import EditKegiatan from "./pages/kegiatan/EditKegiatan";
 import Buku from "./pages/buku/Buku";
 import AddBuku from "./pages/buku/AddBuku";
 import EditBuku from "./pages/buku/EditBuku";
-import Donasi from "./pages/donasi/Donasi"; // Import halaman Donasi
-import AddDonasi from "./pages/donasi/AddDonasi"; // Import halaman AddDonasi
-import DetailDonasi from "./components/donasi/DetailDonasi"; // Import halaman detail donasi
+import Donasi from "./pages/donasi/Donasi";
+import DonasiBukuForm from "./pages/donasi/DonasiBukuForm";
+import DonasiUangForm from "./pages/donasi/DonasiUangForm";
+
+
 
 // Import halaman untuk fitur Pinjaman
 import Pinjaman from "./pages/pinjaman/Pinjaman"; // Import halaman Pinjaman
@@ -35,10 +37,10 @@ function App() {
           <Route path="/buku" element={<Buku />} />
           <Route path="/buku/add" element={<AddBuku />} />
           <Route path="/buku/edit/:id" element={<EditBuku />} />
-          <Route path="/donasi" element={<Donasi />} /> {/* Route Donasi */}
-          <Route path="/donasi/add" element={<AddDonasi />} /> {/* Route AddDonasi */}
-          <Route path="/donasi/detail/:id" element={<DetailDonasi />} /> {/* Route Detail Donasi */}
-          
+          <Route path="/donasi" element={<Donasi />} />
+          <Route path="/donasi-buku" element={<DonasiBukuForm />} />
+          <Route path="/donasi-uang" element={<DonasiUangForm />} />
+
           {/* Route untuk Pinjaman */}
           <Route path="/pinjaman" element={<Pinjaman />} /> {/* Route Pinjaman */}
           <Route path="/pinjaman/add/:id" element={<AddPinjaman />} /> {/* Route AddPinjaman */}
