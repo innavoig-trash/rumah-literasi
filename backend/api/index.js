@@ -11,8 +11,8 @@ const { sequelize } = require('../models');
 dotenv.config();
 
 const PORT = process.env.APP_PORT || 3001;
-const URL = process.env.APP_URL || 'http://localhost:3001';
-const ORIGIN = process.env.APP_ORIGIN || 'http://localhost:5173';
+const URL = process.env.APP_URL || 'https://gvbe-rumah-literasi.vercel.app';
+const ORIGIN = process.env.APP_ORIGIN || 'https://gvfe-rumah-literasi.vercel.app';
 const SECRET = process.env.APP_SECRET || 'rumah-literasi';
 
 const app = express();
