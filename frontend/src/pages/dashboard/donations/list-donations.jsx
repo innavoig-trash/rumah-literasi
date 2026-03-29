@@ -65,9 +65,7 @@ const ListDonations = () => {
 			<Heading>
 				<HeadingTitle>Donations List</HeadingTitle>
 				<HeadingDescription>
-					Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nemo fuga
-					temporibus laudantium nesciunt voluptas iure, blanditiis quisquam
-					reprehenderit ea tempore.
+					Daftar donasi finansial yang telah dibuat untuk mendukung kegiatan literasi baca-tulis di Taman Mraen Mimpi.
 				</HeadingDescription>
 
 				<div className='flex items-center justify-end'>

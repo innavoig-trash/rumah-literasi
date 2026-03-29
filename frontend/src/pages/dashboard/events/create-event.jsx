@@ -20,9 +20,8 @@ const CreateEvent = () => {
 	const onSubmit = async (data) => {
 		try {
 			await axios.post('/events', data, {
-				headers: { 'Content-Type': 'application/json' },
+				headers: { 'Content-Type': 'multipart/form-data' },
 			});
-
 			toast('Event created', {
 				description: 'Successfully created event',
 			});
@@ -31,7 +30,7 @@ const CreateEvent = () => {
 			navigate('/dashboard/events');
 		} catch (error) {
 			toast.error('Failed to create event', {
-				description: error.response.data.message || error.message,
+				description: error.response?.data?.message || error.message,
 			});
 			console.error(error);
 		}
@@ -42,9 +41,7 @@ const CreateEvent = () => {
 			<Heading>
 				<HeadingTitle>Create Event</HeadingTitle>
 				<HeadingDescription>
-					Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nemo fuga
-					temporibus laudantium nesciunt voluptas iure, blanditiis quisquam
-					reprehenderit ea tempore.
+					Buat acara untuk mendukung kegiatan literasi baca-tulis di Taman Mraen Mimpi
 				</HeadingDescription>
 			</Heading>
 

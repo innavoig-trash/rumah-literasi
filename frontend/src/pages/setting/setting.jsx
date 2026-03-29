@@ -12,9 +12,7 @@ const Setting = () => {
 			<Heading>
 				<HeadingTitle>Application Setting</HeadingTitle>
 				<HeadingDescription>
-					Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nemo fuga
-					temporibus laudantium nesciunt voluptas iure, blanditiis quisquam
-					reprehenderit ea tempore.
+					Manage your application settings to support literacy activities at Mraen Mimpi
 				</HeadingDescription>
 			</Heading>
 		</div>

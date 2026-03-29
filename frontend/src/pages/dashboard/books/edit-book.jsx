@@ -52,9 +52,7 @@ const EditBook = () => {
 			<Heading>
 				<HeadingTitle>Edit Book</HeadingTitle>
 				<HeadingDescription>
-					Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nemo fuga
-					temporibus laudantium nesciunt voluptas iure, blanditiis quisquam
-					reprehenderit ea tempore.
+					Perbarui informasi buku yang ingin didonasikan. Pastikan untuk mengisi informasi buku dengan lengkap dan akurat agar dapat membantu kami dalam proses distribusi buku kepada mereka yang membutuhkan.
 				</HeadingDescription>
 			</Heading>
 

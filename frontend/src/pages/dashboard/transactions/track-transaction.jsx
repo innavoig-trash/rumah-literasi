@@ -28,9 +28,7 @@ const ShowTransaction = () => {
 			<Heading>
 				<HeadingTitle>Transaction Tracking</HeadingTitle>
 				<HeadingDescription>
-					Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nemo fuga
-					temporibus laudantium nesciunt voluptas iure, blanditiis quisquam
-					reprehenderit ea tempore.
+					Detail informasi pelacakan donasi untuk mendukung kegiatan literasi baca-tulis di Mraen Mimpi
 				</HeadingDescription>
 			</Heading>
 

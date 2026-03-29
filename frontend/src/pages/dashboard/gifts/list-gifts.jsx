@@ -65,9 +65,7 @@ const ListGifts = () => {
 			<Heading>
 				<HeadingTitle>Gifts List</HeadingTitle>
 				<HeadingDescription>
-					Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nemo fuga
-					temporibus laudantium nesciunt voluptas iure, blanditiis quisquam
-					reprehenderit ea tempore.
+					Daftar donasi untuk mendukung kegiatan literasi baca-tulis di Mraen Mimpi
 				</HeadingDescription>
 
 				<div className='flex items-center justify-end'>

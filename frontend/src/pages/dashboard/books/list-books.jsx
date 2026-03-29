@@ -64,9 +64,7 @@ const ListBooks = () => {
 			<Heading>
 				<HeadingTitle>Book List</HeadingTitle>
 				<HeadingDescription>
-					Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nemo fuga
-					temporibus laudantium nesciunt voluptas iure, blanditiis quisquam
-					reprehenderit ea tempore.
+					Daftar buku yang telah didonasikan ke Taman Mraen Mimpi. Anda dapat menambahkan, memperbarui, atau menghapus buku yang ingin didonasikan. 
 				</HeadingDescription>
 
 				<div className='flex items-center justify-end'>

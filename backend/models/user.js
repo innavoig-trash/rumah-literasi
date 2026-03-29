@@ -1,6 +1,6 @@
 'use strict';
-const { Model } = require('sequelize');
 const argon2 = require('argon2');
+const { Model } = require('sequelize');
 const { ROLES } = require('../libs/constant');
 
 module.exports = (sequelize, DataTypes) => {
@@ -11,19 +11,19 @@ module.exports = (sequelize, DataTypes) => {
 		 * The `models/index` file will call this method automatically.
 		 */
 		static associate(models) {
-			this.hasMany(models.Donation, {
+			this.hasMany(models.FinancialDonation, {
 				foreignKey: 'user_id',
-				as: 'donations',
+				as: 'financial_donations',
 			});
 
-			this.hasMany(models.Gift, {
+			this.hasMany(models.BookDonation, {
 				foreignKey: 'user_id',
-				as: 'gifts',
+				as: 'book_donations',
 			});
 
-			this.hasMany(models.Transaction, {
+			this.hasMany(models.Address, {
 				foreignKey: 'user_id',
-				as: 'transactions',
+				as: 'addresses',
 			});
 		}
 	}

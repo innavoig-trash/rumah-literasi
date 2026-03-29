@@ -1,13 +1,40 @@
 const ApiError = require('../libs/error');
 const ApiResponse = require('../libs/response');
+const SearchService = require('../libs/search-service');
 
-const { User } = require('../models');
+const { User, sequelize } = require('../models');
+
+const searchService = new SearchService(sequelize);
 
 const UserController = {
 	async index(req, res, next) {
 		try {
-			const users = await User.findAll();
-			return res.json(new ApiResponse('Users retrieved successfully', users));
+			const { search, page, limit, role } = req.query;
+
+			const filters = {};
+			if (role) filters.role = role;
+
+			const paginate = searchService.paginate({ page, limit });
+			const result = await searchService.search(
+				User,
+				search,
+				filters,
+				{ page, limit },
+				[],
+				['name', 'email']
+			);
+
+			return res.json(
+				new ApiResponse('Users retrieved successfully', {
+					rows: result.rows,
+					pagination: {
+						total: result.count,
+						page: paginate.page,
+						limit: paginate.limit,
+						pages: Math.ceil(result.count / paginate.limit),
+					},
+				})
+			);
 		} catch (error) {
 			next(error);
 		}
@@ -33,7 +60,7 @@ const UserController = {
 
 			const user = await User.findOne({
 				where: { uuid },
-				include: ['donations', 'gifts'],
+				include: ['financial_donations', 'book_donations'],
 			});
 
 			if (!user) throw new ApiError(404, 'User not found');

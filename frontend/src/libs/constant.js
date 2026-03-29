@@ -1,25 +1,33 @@
-import { UsersRound } from 'lucide-react';
-import { Gift } from 'lucide-react';
+import { Store } from 'lucide-react';
+
 import {
+	Gift,
+	MapPin,
+	UsersRound,
 	Phone,
 	Instagram,
 	Facebook,
 	HeartHandshake,
 	Bolt,
-	Library,
 	Calendar,
 	Twitter,
 	Mail,
 	Globe,
-	Book,
 	Home,
 } from 'lucide-react';
 
 export const ROLES = {
-	GUEST: 'guest',
-	ADMIN: 'admin',
-	LIBRARIAN: 'librarian',
-	SUPERADMIN: 'superadmin',
+	GUEST: 'Guest',
+	ADMIN: 'Admin',
+	LIBRARIAN: 'Librarian',
+	SUPERADMIN: 'Superadmin',
+};
+
+export const STEPS = {
+	ITEMS: 0,
+	DETAIL: 1,
+	COURIER: 2,
+	REVIEW: 3,
 };
 
 export const SIDEBAR_MENUS = [
@@ -34,34 +42,22 @@ export const SIDEBAR_MENUS = [
 				roles: null,
 			},
 			{
-				href: '/dashboard/books',
-				label: 'List Books',
-				icon: Book,
-				roles: [ROLES.LIBRARIAN, ROLES.SUPERADMIN],
-			},
-			{
 				href: '/dashboard/events',
-				label: 'List Events',
+				label: 'Manage Events',
 				icon: Calendar,
 				roles: [ROLES.ADMIN, ROLES.SUPERADMIN],
 			},
 			{
-				href: '/dashboard/gifts',
-				label: 'List Gifts',
+				href: '/dashboard/book-donations',
+				label: 'Book Donation',
 				icon: Gift,
-				roles: [ROLES.GUEST, ROLES.ADMIN, ROLES.SUPERADMIN],
+				roles: [ROLES.GUEST, ROLES.LIBRARIAN, ROLES.SUPERADMIN],
 			},
 			{
-				href: '/dashboard/donations',
-				label: 'List Donations',
+				href: '/dashboard/financial-donations',
+				label: 'Financial Donations',
 				icon: HeartHandshake,
 				roles: [ROLES.GUEST, ROLES.ADMIN, ROLES.SUPERADMIN],
-			},
-			{
-				href: '/dashboard/transactions',
-				label: 'List Transactions',
-				icon: Library,
-				roles: [ROLES.GUEST, ROLES.LIBRARIAN, ROLES.SUPERADMIN],
 			},
 		],
 	},
@@ -71,15 +67,27 @@ export const SIDEBAR_MENUS = [
 		submenus: [
 			{
 				href: '/dashboard/members',
-				label: 'List Members',
+				label: 'Members',
 				icon: UsersRound,
 				roles: [ROLES.SUPERADMIN],
 			},
 			{
-				href: '/dashboard/settings',
-				label: 'Settings',
+				href: '/dashboard/addresses',
+				label: 'Addresses',
+				icon: MapPin,
+				roles: [ROLES.GUEST, ROLES.SUPERADMIN],
+			},
+			{
+				href: '/dashboard/merchant',
+				label: 'Merchant',
+				icon: Store,
+				roles: [ROLES.ADMIN, ROLES.SUPERADMIN],
+			},
+			{
+				href: '/dashboard/logs',
+				label: 'Logs',
 				icon: Bolt,
-				roles: null,
+				roles: [ROLES.ADMIN, ROLES.SUPERADMIN],
 			},
 		],
 	},
@@ -90,10 +98,7 @@ export const WIDGET_NAV = [
 		href: '/',
 		label: 'Home',
 	},
-	{
-		href: '/company',
-		label: 'Our Company',
-	},
+	
 	{
 		href: '/about',
 		label: 'About Us',
@@ -102,43 +107,40 @@ export const WIDGET_NAV = [
 		href: '/contact',
 		label: 'Contact and Support',
 	},
-	{
-		href: '/faq',
-		label: 'Frequently Asked Questions',
-	},
+
 ];
 
 export const WIDGET_CONTACT = [
 	{
-		href: 'https://rumah-literasi.com',
-		label: 'rumah-literasi.com',
+		href: 'https://mraen-mimpi.org',
+		label: 'mraen-mimpi.org',
 		icon: Globe,
 	},
 	{
-		href: 'tel:+6285735146647',
-		label: '+6285735146647',
+		href: 'tel:+6285755478336',
+		label: '+6285755478336',
 		icon: Phone,
 	},
 	{
-		href: 'mailto:info@rumah-literasi.com',
-		label: 'info@rumah-literasi.com',
+		href: 'mailto:info@mraen-mimpi.org',
+		label: 'info@mraen-mimpi.org',
 		icon: Mail,
 	},
 ];
 
 export const WIDGET_SOCIAL = [
 	{
-		href: 'https://instagram.com/rumahliterasi',
-		label: '@rumahliterasi',
+		href: 'https://instagram.com/MraenMimpi',
+		label: '@MraenMimpi',
 		icon: Instagram,
 	},
 	{
-		href: 'https://twitter.com/rumahliterasi',
-		label: '@rumahliterasi',
+		href: 'https://twitter.com/MraenMimpi?t=AWguXhdAm1dMg_8EvKn-1g&s=09',
+		label: '@MraenMimpi',
 		icon: Twitter,
 	},
 	{
-		href: 'https://facebook.com/rumahliterasi',
+		href: 'https://www.tiktok.com/@mraenmimpi',
 		label: 'Rumah Literasi',
 		icon: Facebook,
 	},
@@ -150,6 +152,12 @@ export const ERROR_MESSAGES = {
 	404: 'Resource not found, please try again later',
 	429: 'You have exceeded the rate limit, try again later',
 	500: 'Internal server error, try again later',
+};
+
+export const PAYMENT_STATUS = {
+	PENDING: 'Pending',
+	SUCCESS: 'Success',
+	FAILED: 'Failed',
 };
 
 export const DEFAULT_LOCATION = {

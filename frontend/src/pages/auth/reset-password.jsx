@@ -55,9 +55,6 @@ const ResetPassword = () => {
 
 	const onSubmit = handleSubmit(async (data) => {
 		try {
-			toast('Resetting password...', {
-				description: 'We are resetting your password',
-			});
 			await axios.post('/auth/reset-password', data);
 			toast('Password reset successfully', {
 				description: 'Please login with your new password',
@@ -65,7 +62,7 @@ const ResetPassword = () => {
 			navigate('/auth/signin');
 		} catch (error) {
 			toast.error('Failed to reset password', {
-				description: error.response.data.message || error.message,
+				description: error.response?.data?.message || error.message,
 			});
 			console.error(error);
 		}

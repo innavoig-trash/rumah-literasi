@@ -18,9 +18,7 @@ const ProfileDetail = () => {
 			<Heading>
 				<HeadingTitle>Member Profile</HeadingTitle>
 				<HeadingDescription>
-					Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nemo fuga
-					temporibus laudantium nesciunt voluptas iure, blanditiis quisquam
-					reprehenderit ea tempore.
+					Detail informasi anggota di Mraen Mimpi
 				</HeadingDescription>
 			</Heading>
 

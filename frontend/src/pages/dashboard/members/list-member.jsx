@@ -1,12 +1,11 @@
-import * as React from 'react';
-
 import useSWR from 'swr';
 import { toast } from 'sonner';
 import { Link } from 'react-router';
+import { usePagination, useString } from '@/hooks/use-pagination';
 
 import axios from '@/libs/axios';
 import { useConfirm } from '@/hooks/use-confirm';
-import { useResultState } from '@/hooks/use-result-state';
+import { Input } from '@/components/ui/input';
 
 import {
 	Heading,
@@ -24,16 +23,39 @@ import {
 } from '@/components/ui/table';
 
 import { Button } from '@/components/ui/button';
-import { Avatar } from '@/components/ui/avatar';
+import { Avatar, AvatarGroup } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Loading } from '@/components/loading';
 import { Empty } from '@/components/empty';
 import { Error } from '@/components/error';
+import { useResultState } from '@/hooks/use-result-state';
+import { Pagination } from '@/components/pagination';
+import { ROLES } from '@/libs/constant';
+import { Select } from '@/components/ui/select';
 
 const ListMembers = () => {
 	const { confirm } = useConfirm();
-	const { error, mutate, data, isLoading: loading } = useSWR('/members');
-	const { result, empty } = useResultState(error, loading, data);
+	const { page, limit, search, setSearch, debounced } = usePagination();
+	const [role, setRole] = useString('role');
+
+	const {
+		error,
+		mutate,
+		data,
+		isLoading: loading,
+	} = useSWR([
+		'members',
+		{
+			params: {
+				page: page,
+				limit: limit,
+				search: debounced,
+				role: role,
+			},
+		},
+	]);
+
+	const { result, pagination, empty } = useResultState(error, loading, data);
 
 	const handleDelete = async (uuid) => {
 		confirm({
@@ -50,9 +72,9 @@ const ListMembers = () => {
 					});
 				} catch (error) {
 					toast.error('Failed to delete member', {
-						description: error.response.data.message || error.message,
+						description: error.response?.data?.message || error.message,
 					});
-					console.log(error);
+					console.error(error);
 				}
 			})
 			.catch(() => {
@@ -65,24 +87,40 @@ const ListMembers = () => {
 			<Heading>
 				<HeadingTitle>Member List</HeadingTitle>
 				<HeadingDescription>
-					Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nemo fuga
-					temporibus laudantium nesciunt voluptas iure, blanditiis quisquam
-					reprehenderit ea tempore.
+					Manage all members with pagination and search functionality.
 				</HeadingDescription>
-
-				<div className='flex items-center justify-end'>
-					<Link to='/dashboard/members/create'>
-						<Button>Create Member</Button>
-					</Link>
-				</div>
 			</Heading>
 
-			<div className='w-full overflow-x-auto border rounded-lg border-zinc-200'>
+			<div className='flex items-center justify-between'>
+				<div className='flex items-center w-full gap-2'>
+					<Input
+						value={search}
+						type='search'
+						placeholder='Search by member name, address...'
+						onChange={(e) => setSearch(e.target.value)}
+					/>
+					<Select
+						value={status}
+						className='max-w-40'
+						onChange={(e) => setRole(e.target.value)}>
+						<option value=''>Select a status</option>
+						{Object.values(ROLES).map((status) => (
+							<option key={status} value={status}>
+								{status}
+							</option>
+						))}
+					</Select>
+				</div>
+				<Link to='/dashboard/members/create' className='flex-none'>
+					<Button>Create Member</Button>
+				</Link>
+			</div>
+
+			<div className='w-full overflow-x-auto border rounded-xl border-zinc-200'>
 				<Table>
 					<TableHeader>
 						<TableRow>
 							<TableHead>Name</TableHead>
-							<TableHead>Email</TableHead>
 							<TableHead>Role</TableHead>
 							<TableHead>Verified</TableHead>
 							<TableHead>Action</TableHead>
@@ -92,19 +130,15 @@ const ListMembers = () => {
 						{result.map((member) => (
 							<TableRow key={member.uuid}>
 								<TableCell>
-									<div className='flex items-center gap-4'>
-										<Avatar name={member.name} className='flex-none' />
-										<span className='font-medium'>{member.name}</span>
-									</div>
+									<AvatarGroup user={member} />
 								</TableCell>
-								<TableCell>{member.email}</TableCell>
 								<TableCell>{member.role}</TableCell>
 								<TableCell>
 									<Badge>{member.is_verified ? 'Yes' : 'No'}</Badge>
 								</TableCell>
 								<TableCell>
 									<div className='flex items-center gap-2'>
-										<Link to={member.uuid + '/edit'} relative='path'>
+										<Link to={'/dashboard/members/' + member.uuid + '/edit'}>
 											<button className='bg-transparent hover:text-amber-500'>
 												Edit
 											</button>
@@ -125,6 +159,8 @@ const ListMembers = () => {
 				<Empty empty={!loading && empty} />
 				<Loading loading={loading} />
 			</div>
+
+			{pagination && <Pagination pagination={pagination} />}
 		</div>
 	);
 };

@@ -3,6 +3,8 @@ import * as React from 'react';
 import useSWR from 'swr';
 import { toast } from 'sonner';
 import { Link } from 'react-router';
+import { usePagination } from '@/hooks/use-pagination';
+import { Input } from '@/components/ui/input';
 
 import { Button } from '@/components/ui/button';
 import { useConfirm } from '@/hooks/use-confirm';
@@ -27,11 +29,29 @@ import { Loading } from '@/components/loading';
 import { Empty } from '@/components/empty';
 import { Error } from '@/components/error';
 import { useResultState } from '@/hooks/use-result-state';
+import { Pagination } from '@/components/pagination';
 
 const ListEvents = () => {
 	const { confirm } = useConfirm();
-	const { error, mutate, data, isLoading: loading } = useSWR('/events');
-	const { result, empty } = useResultState(error, loading, data);
+	const { page, limit, search, setSearch, debounced } = usePagination();
+
+	const {
+		error,
+		mutate,
+		data,
+		isLoading: loading,
+	} = useSWR([
+		'events',
+		{
+			params: {
+				page: page,
+				limit: limit,
+				search: debounced,
+			},
+		},
+	]);
+
+	const { result, pagination, empty } = useResultState(error, loading, data);
 
 	const handleDelete = async (id) => {
 		confirm({
@@ -48,9 +68,9 @@ const ListEvents = () => {
 					});
 				} catch (error) {
 					toast.error('Failed to delete event', {
-						description: error.response.data.message || error.message,
+						description: error.response?.data?.message || error.message,
 					});
-					console.log(error);
+					console.error(error);
 				}
 			})
 			.catch(() => {
@@ -63,25 +83,31 @@ const ListEvents = () => {
 			<Heading>
 				<HeadingTitle>Events List</HeadingTitle>
 				<HeadingDescription>
-					Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nemo fuga
-					temporibus laudantium nesciunt voluptas iure, blanditiis quisquam
-					reprehenderit ea tempore.
+					Manage all events with pagination and search functionality.
 				</HeadingDescription>
-
-				<div className='flex items-center justify-end'>
-					<Link to='/dashboard/events/create'>
-						<Button>Create Event</Button>
-					</Link>
-				</div>
 			</Heading>
 
-			<div className='w-full overflow-x-auto border rounded-lg border-zinc-200'>
+			<div className='flex items-center justify-between'>
+				<Input
+					value={search}
+					type='search'
+					placeholder='Search by title, description...'
+					onChange={(e) => setSearch(e.target.value)}
+				/>
+
+				<Link to='/dashboard/events/create' className='flex-none'>
+					<Button>Create Event</Button>
+				</Link>
+			</div>
+
+			<div className='w-full overflow-x-auto border rounded-xl border-zinc-200'>
 				<Table>
 					<TableHeader>
 						<TableRow>
 							<TableHead>Title</TableHead>
 							<TableHead>Description</TableHead>
 							<TableHead>Date</TableHead>
+							<TableHead>Location</TableHead>
 							<TableHead>Action</TableHead>
 						</TableRow>
 					</TableHeader>
@@ -91,11 +117,12 @@ const ListEvents = () => {
 								<TableCell className='font-medium'>{event.title}</TableCell>
 								<TableCell>{event.description}</TableCell>
 								<TableCell>{event.date}</TableCell>
+								<TableCell>{event.location}</TableCell>
 								<TableCell>
 									<div className='flex items-center gap-2'>
-										<Link to={event.id + '/edit'} relative='path'>
+										<Link to={'/dashboard/events/' + event.id}>
 											<button className='bg-transparent hover:text-amber-500'>
-												Edit
+												Detail
 											</button>
 										</Link>
 										<button
@@ -114,6 +141,8 @@ const ListEvents = () => {
 				<Empty empty={!loading && empty} />
 				<Loading loading={loading} />
 			</div>
+
+			{pagination && <Pagination pagination={pagination} />}
 		</div>
 	);
 };

@@ -60,9 +60,7 @@ const CreateTransaction = () => {
 			<Heading>
 				<HeadingTitle>Create Transaction</HeadingTitle>
 				<HeadingDescription>
-					Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nemo fuga
-					temporibus laudantium nesciunt voluptas iure, blanditiis quisquam
-					reprehenderit ea tempore.
+					Buat donasi untuk mendukung kegiatan literasi baca-tulis di Mraen Mimpi
 				</HeadingDescription>
 			</Heading>
 

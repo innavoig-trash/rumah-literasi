@@ -19,7 +19,7 @@ const MapEvent = ({ handleClick, handleLocationFound }) => {
 	return null;
 };
 
-export const Map = ({ location, setLocation, className }) => {
+export const Map = ({ location, setLocation = () => {}, className }) => {
 	const [mapRef, setMapRef] = React.useState(null);
 
 	const handleClick = (latlng) => {
@@ -39,7 +39,7 @@ export const Map = ({ location, setLocation, className }) => {
 			ref={setMapRef}
 			scrollWheelZoom={false}
 			center={[location.latitude, location.longitude]}
-			className={cn('w-full border rounded-lg z-0', className)}>
+			className={cn('w-full border rounded-xl z-0', className)}>
 			<TileLayer
 				attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 				url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'

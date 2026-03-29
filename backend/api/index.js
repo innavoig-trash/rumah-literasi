@@ -21,6 +21,7 @@ const store = new sequelizeStore({
 	tableName: 'sessions',
 });
 
+app.set('trust proxy', true);
 app.use(
 	cors({
 		origin: ORIGIN,
@@ -37,7 +38,7 @@ app.use(
 		proxy: true,
 		cookie: {
 			httpOnly: true,
-			sameSite: 'none',
+			sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
 			secure: process.env.NODE_ENV === 'production',
 		},
 	})
@@ -50,27 +51,27 @@ app.use('/uploads', express.static('uploads'));
 
 app.use(
 	ratelimit({
-		limit: 30,
-		windowMs: 1 * 60 * 1000,
+		limit: 100,
+		windowMs: 1000 * 60,
 		standardHeaders: 'draft-8',
 	})
 );
 
 const errorHandler = require('../middleware/errors');
+const { authenticate } = require('../middleware/authenticate');
+
 const authRoutes = require('../routes/auth.routes');
 const paymentRoutes = require('../routes/payment.routes');
-
-const { authenticate } = require('../middleware/authenticate');
-const { authorize } = require('../middleware/authorize');
-const { delay } = require('../middleware/delay');
-
-const userRoutes = require('../routes/user.routes');
-const bookRoutes = require('../routes/book.routes');
-const eventRoutes = require('../routes/event.routes');
-const giftRoutes = require('../routes/gift.routes');
-const donationRoutes = require('../routes/donation.routes');
-const transactionRoutes = require('../routes/transaction.routes');
+const teritoriesRoutes = require('../routes/teritory.route');
+const publicRoutes = require('../routes/public.routes');
+const bookDonationRoutes = require('../routes/book-donation.routes');
+const financialDonationRoutes = require('../routes/financial-donation.routes');
 const deliveryRoutes = require('../routes/delivery.routes');
+const addressRoutes = require('../routes/address.routes');
+const eventRoutes = require('../routes/event.routes');
+const userRoutes = require('../routes/user.routes');
+const merchantRoutes = require('../routes/merchant.routes');
+const logRoutes = require('../routes/log.routes');
 
 app.use('/api/_healthcheck', (req, res) => {
 	res.status(200).json({
@@ -78,23 +79,20 @@ app.use('/api/_healthcheck', (req, res) => {
 	});
 });
 
-app.use(delay(1000));
 app.use('/api/auth', authRoutes);
 app.use('/api/payment', paymentRoutes);
+app.use('/api/teritories', teritoriesRoutes);
+app.use('/api/public', publicRoutes);
 
 app.use(authenticate);
-app.use('/api/gifts', giftRoutes);
-app.use('/api/donations', donationRoutes);
-app.use('/api/transactions', transactionRoutes);
+app.use('/api/book-donations', bookDonationRoutes);
+app.use('/api/financial-donations', financialDonationRoutes);
 app.use('/api/deliveries', deliveryRoutes);
-app.use('/api/books', bookRoutes);
-
-const admin = authorize('admin');
-
-app.use(admin);
-app.use('/api/books', bookRoutes);
+app.use('/api/addresses', addressRoutes);
 app.use('/api/events', eventRoutes);
 app.use('/api/members', userRoutes);
+app.use('/api/merchant', merchantRoutes);
+app.use('/api/logs', logRoutes);
 
 app.use(errorHandler);
 app.get('*', (req, res) => {

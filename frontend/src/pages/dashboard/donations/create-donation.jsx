@@ -39,9 +39,7 @@ const CreateDonation = () => {
 			<Heading>
 				<HeadingTitle>Create Donation</HeadingTitle>
 				<HeadingDescription>
-					Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nemo fuga
-					temporibus laudantium nesciunt voluptas iure, blanditiis quisquam
-					reprehenderit ea tempore.
+					Buat donasi finansial untuk mendukung kegiatan literasi baca-tulis di Taman Mraen Mimpi. Donasi Anda akan digunakan untuk membeli buku, alat tulis, dan perlengkapan lainnya yang dibutuhkan untuk menjalankan program-program literasi kami. Terima kasih atas dukungan Anda!
 				</HeadingDescription>
 			</Heading>
 

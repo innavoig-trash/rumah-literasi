@@ -42,9 +42,8 @@ const CreateBook = () => {
 			<Heading>
 				<HeadingTitle>Create Book</HeadingTitle>
 				<HeadingDescription>
-					Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nemo fuga
-					temporibus laudantium nesciunt voluptas iure, blanditiis quisquam
-					reprehenderit ea tempore.
+					Tambahkan buku yang ingin didonasikan ke dalam sistem kami. Pastikan untuk mengisi informasi buku dengan lengkap dan akurat agar dapat membantu 
+					kami dalam proses distribusi buku kepada mereka yang membutuhkan.
 				</HeadingDescription>
 			</Heading>
 

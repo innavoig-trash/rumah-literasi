@@ -22,7 +22,6 @@ const CreateMember = () => {
 			await axios.post('/members', data, {
 				headers: { 'Content-Type': 'application/json' },
 			});
-
 			toast('Member created', {
 				description: 'Successfully created member',
 			});
@@ -31,7 +30,7 @@ const CreateMember = () => {
 			navigate('/dashboard/members');
 		} catch (error) {
 			toast.error('Failed to create member', {
-				description: error.response.data.message || error.message,
+				description: error.response?.data?.message || error.message,
 			});
 			console.error(error);
 		}
@@ -42,9 +41,7 @@ const CreateMember = () => {
 			<Heading>
 				<HeadingTitle>Create Member</HeadingTitle>
 				<HeadingDescription>
-					Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nemo fuga
-					temporibus laudantium nesciunt voluptas iure, blanditiis quisquam
-					reprehenderit ea tempore.
+					Buat anggota untuk mendukung kegiatan literasi baca-tulis di Mraen Mimpi
 				</HeadingDescription>
 			</Heading>
 

@@ -50,9 +50,7 @@ const EditDonation = () => {
 			<Heading>
 				<HeadingTitle>Edit Donation</HeadingTitle>
 				<HeadingDescription>
-					Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nemo fuga
-					temporibus laudantium nesciunt voluptas iure, blanditiis quisquam
-					reprehenderit ea tempore.
+					Perbarui informasi donasi finansial untuk mendukung kegiatan literasi baca-tulis di Taman Mraen Mimpi
 				</HeadingDescription>
 			</Heading>
 
